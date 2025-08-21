@@ -1,0 +1,149 @@
+[
+    {
+        "id":1,
+        "title": "To Kill a Mockingbird",
+        "price": 10.99,
+        "category": "Fiction",
+        "image_link": "https://m.media-amazon.com/images/I/81gepf1eMqL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+        "id":2,
+        "title": "1984",
+        "price": 9.99,
+        "category": "Science Fiction",
+        "image_link": "https://example.com/1984.jpg"
+    },
+    {
+        "id":3,
+        "title": "The Great Gatsby",
+        "price": 12.99,
+        "category": "Fiction",
+        "image_link": "https://m.media-amazon.com/images/I/71NvkZxn-fL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+        "id":4,
+        "title": "Pride and Prejudice",
+        "price": 11.99,
+        "category": "Romance",
+        "image_link": "https://m.media-amazon.com/images/I/91E9-FyfvGL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+        "id":5,
+        "title": "Harry Potter and the Sorcerer's Stone",
+        "price": 15.99,
+        "category": "Fantasy",
+        "image_link": "https://images.moviesanywhere.com/54e4356f686ba20ee680e14fb2395034/54cce72e-d982-4e76-8551-0e88bc63fd5d.jpg"
+    },
+    {
+        "id":6,
+        "title": "The Catcher in the Rye",
+        "price": 11.49,
+        "category": "Fiction",
+        "image_link": "https://m.media-amazon.com/images/I/7108sdEUEGL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+        "id":7,
+        "title": "Lord of the Flies",
+        "price": 10.49,
+        "category": "Fiction",
+        "image_link": "https://m.media-amazon.com/images/I/81WUAoL-wFL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+        "id":8,
+        "title": "Animal Farm",
+        "price": 9.79,
+        "category": "Satire",
+        "image_link": "https://rukminim2.flixcart.com/image/850/1000/kqidx8w0/book/s/a/o/animal-farm-original-imag4gh9h7b88ztw.jpeg?q=90&crop=false"
+    },
+    {
+        "id":9,
+        "title": "The Hobbit",
+        "price": 14.99,
+        "category": "Fantasy",
+        "image_link": "https://m.media-amazon.com/images/I/717TGeIkVML._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+        "id":10,
+        "title": "The Da Vinci Code",
+        "price": 13.49,
+        "category": "Mystery",
+        "image_link": "https://images.moviesanywhere.com/2568d79b2127c226f6e280f1c8d6aaaa/73178fc2-a81e-44a4-a870-1e275b5709fd.jpg"
+    },
+    {
+        "id":11,
+        "title": "The Hitchhiker's Guide to the Galaxy",
+        "price": 12.79,
+        "category": "Science Fiction",
+        "image_link": "https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2015/6/25/1435245979235/047c9878-9845-473c-9635-5f32545746b0-1355x2040.jpeg?width=700&quality=85&auto=format&fit=max&s=606433bda33c8c27c5ebd7ba85900473"
+    },
+    {
+        "id":12,
+        "title": "Brave New World",
+        "price": 10.99,
+        "category": "Science Fiction",
+        "image_link": "https://cdn.kobo.com/book-images/6f07a0e9-8ca8-4b28-982c-7898ac591744/1200/1200/False/brave-new-world-79.jpg"
+    },
+    {
+        "id":13,
+        "title": "The Lord of the Rings: The Fellowship of the Ring",
+        "price": 17.99,
+        "category": "Fantasy",
+        "image_link": "https://images.moviesanywhere.com/198e228b071c60f5ad57e5f62fe60029/ff22cad6-2218-414d-b853-3f95d76905c7.jpg"
+    },
+    {
+        "id":14,
+        "title": "The Picture of Dorian Gray",
+        "price": 11.29,
+        "category": "Gothic Fiction",
+        "image_link": "https://m.media-amazon.com/images/M/MV5BNmFiY2RmOGQtYmU4OC00MzI2LWJjMmMtOTViMDY1ZjE2N2ViXkEyXkFqcGdeQXVyODcyNDkyMzY@._V1_FMjpg_UX1000_.jpg"
+    },
+    {
+        "id":15,
+        "title": "The Road",
+        "price": 10.79,
+        "category": "Post-apocalyptic",
+        "image_link": "https://upload.wikimedia.org/wikipedia/en/a/a7/The_Road_movie_poster.jpg"
+    },
+    {
+        "id":16,
+        "title": "Moby-Dick",
+        "price": 13.99,
+        "category": "Adventure",
+        "image_link": "https://m.media-amazon.com/images/M/MV5BYzg0MjFmMjAtMmNlMC00ZmEzLWE0ZDQtYTFhZjAyNzIxZWU3XkEyXkFqcGdeQXVyMjQwMjk0NjI@._V1_.jpg"
+    },
+    {
+        "id":17,
+        "title": "The Chronicles of Narnia: The Lion, the Witch and the Wardrobe",
+        "price": 14.49,
+        "category": "Fantasy",
+        "image_link": "https://m.media-amazon.com/images/I/81NEPVv9QVL._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+        "id":18,
+        "title": "The Shining",
+        "price": 12.49,
+        "category": "Horror",
+        "image_link": "https://m.media-amazon.com/images/M/MV5BZWFlYmY2MGEtZjVkYS00YzU4LTg0YjQtYzY1ZGE3NTA5NGQxXkEyXkFqcGdeQXVyMTQxNzMzNDI@._V1_FMjpg_UX1000_.jpg"
+    },
+    {
+        "id":19,
+        "title": "Gone with the Wind",
+        "price": 16.49,
+        "category": "Historical Fiction",
+        "image_link": "https://upload.wikimedia.org/wikipedia/en/thumb/6/6b/Gone_with_the_Wind_cover.jpg/220px-Gone_with_the_Wind_cover.jpg"
+    },
+    {
+        "id":21,
+        "title": "A Tale of Two Cities",
+        "price": 11.99,
+        "category": "Historical Fiction",
+        "image_link": "https://m.media-amazon.com/images/I/71CQFGiPA+L._AC_UF1000,1000_QL80_.jpg"
+    },
+    {
+        "id":22,
+        "title": "Frankenstein",
+        "price": 10.49,
+        "category": "Gothic Fiction",
+        "image_link": "https://m.media-amazon.com/images/I/81EU992zdwL._AC_UF1000,1000_QL80_.jpg"
+    }
+]
