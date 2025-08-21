@@ -1,0 +1,23 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: codexhub-backend
+  namespace: codexhub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: codexhub-backend
+  template:
+    metadata:
+      labels:
+        app: codexhub-backend
+    spec:
+      containers:
+        - name: backend
+          image: rohitar/codexhub-mega-project-backend:CH-1
+          ports:
+            - containerPort: 5001
+          env:
+            - name: MONGO_URI
+              value: mongodb://codexhub-mongo:27017/codexhub

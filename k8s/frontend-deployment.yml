@@ -1,0 +1,20 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: codexhub-frontend
+  namespace: codexhub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: codexhub-frontend
+  template:
+    metadata:
+      labels:
+        app: codexhub-frontend
+    spec:
+      containers:
+        - name: codexhub-frontend
+          image: rohitar/codexhub-mega-project-frontend:CH-1
+          ports:
+            - containerPort: 80

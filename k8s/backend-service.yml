@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: codexhub-backend
+  namespace: codexhub
+spec:
+  selector:
+    app: codexhub-backend
+  ports:
+  - port: 5001
+    targetPort: 5001

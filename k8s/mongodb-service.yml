@@ -1,0 +1,11 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: codexhub-mongo
+  namespace: codexhub
+spec:
+  selector:
+    app: codexhub-mongo
+  ports:
+  - port: 27017
+    targetPort: 27017

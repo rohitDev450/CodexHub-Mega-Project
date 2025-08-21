@@ -1,0 +1,40 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: codexhub-mongo
+  namespace: codexhub
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: codexhub-mongo
+  template:
+    metadata:
+      labels:
+        app: codexhub-mongo
+    spec:
+      initContainers:
+        - name: fix-permissions
+          image: busybox
+          command: ["sh", "-c", "chown -R 999:999 /data/db && chmod -R 700 /data/db"]
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
+        - name: cleanup-lock
+          image: busybox
+          command: ["sh", "-c", "rm -f /data/db/mongod.lock /data/db/*.wt /data/db/journal/* || true"]
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
+      containers:
+        - name: mongo
+          image: mongo:4.4
+          ports:
+            - containerPort: 27017
+          volumeMounts:
+            - name: mongo-data
+              mountPath: /data/db
+      volumes:
+        - name: mongo-data
+          persistentVolumeClaim:
+            claimName: codexhub-mongo-pvc
