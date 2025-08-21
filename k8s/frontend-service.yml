@@ -7,5 +7,5 @@ spec:
   selector:
     app: codexhub-frontend
   ports:
-  - port: 5171
-    targetPort: 5171
+  - port: 5173
+    targetPort: 5173
