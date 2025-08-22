@@ -38,8 +38,8 @@ pipeline {
         }
         stage('Docker Build') {
             steps {
-                sh "docker build -t rohitar/codexhub-frontend:${params.DOCKER_TAG} ./frontend"
-                sh "docker build -t rohitar/codexhub-backend:${params.DOCKER_TAG} ./backend"
+                sh "docker build -t rohitar/codexhub-frontend:${params.DOCKER_TAG} ./Frontend"
+                sh "docker build -t rohitar/codexhub-backend:${params.DOCKER_TAG} ./Backend"
             }
         }
          stage('Test Code') {
