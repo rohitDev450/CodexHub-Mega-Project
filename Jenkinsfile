@@ -56,6 +56,8 @@ pipeline {
         stage('Code Deploy') {
             steps {
                  sh """
+                  kubectl apply -f ${WORKSPACE}/k8s/namespace.yml
+
                   kubectl apply -f ${WORKSPACE}/k8s/frontend-deployment.yml
                   kubectl apply -f ${WORKSPACE}/k8s/frontend-service.yml
 
