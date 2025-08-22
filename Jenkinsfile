@@ -58,14 +58,14 @@ pipeline {
                  sh """
                   kubectl apply -f ${WORKSPACE}/k8s/namespace.yml
 
-                  kubectl apply -f ${WORKSPACE}/k8s/frontend-deployment.yml
-                  kubectl apply -f ${WORKSPACE}/k8s/frontend-service.yml
+                  kubectl apply -f ${WORKSPACE}/k8s/frontend-deployment.yml -n codexhub
+                  kubectl apply -f ${WORKSPACE}/k8s/frontend-service.yml -n codexhub
 
-                  kubectl apply -f ${WORKSPACE}/k8s/backend-deployment.yml
-                  kubectl apply -f ${WORKSPACE}/k8s/backend-service.yml
+                  kubectl apply -f ${WORKSPACE}/k8s/backend-deployment.yml -n codexhub
+                  kubectl apply -f ${WORKSPACE}/k8s/backend-service.yml -n codexhub
 
-                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-deployment.yml
-                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-service.yml
+                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-deployment.yml -n codexhub
+                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-service.yml -n codexhub
                 """
             }
         }
