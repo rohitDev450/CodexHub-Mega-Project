@@ -1,11 +1,14 @@
+@Library('Shared') _
 pipeline {
     agent any
     parameters {
         string(name: 'DOCKER_TAG', defaultValue: '', description: 'Tag for Docker Images (e.g., v1, v2, latest)')
+       
     }
     environment {
         DOCKER_CREDS = credentials('Docker_user')
         KUBECONFIG = '/var/lib/jenkins/.kube/config'
+        SONAR_HOME = tool "Sonar"
     }
 
     stages {
@@ -20,9 +23,49 @@ pipeline {
                 }
             }
         }
+         stage("Workspace cleanup"){
+            steps{
+                script{
+                    cleanWs()
+                }
+            }
+        }
         stage('Git Clone') {
             steps {
-                git url: 'https://github.com/rohitDev450/CodexHub-Mega-Project.git', branch: 'main', changelog: false, poll: false
+                script{
+                    code_checkout("https://github.com/rohitDev450/CodexHub-Mega-Project.git","main")
+                }
+            }
+        }
+        stage("Trivy: Filesystem scan"){
+            steps{
+                script{
+                    trivy_scan()
+                }
+            }
+        }
+
+        stage("OWASP: Dependency check"){
+            steps{
+                script{
+                    owasp_dependency()
+                }
+            }
+        }
+        
+        stage("SonarQube: Code Analysis"){
+            steps{
+                script{
+                    sonarqube_analysis("Sonar","wanderlust","wanderlust")
+                }
+            }
+        }
+        
+        stage("SonarQube: Code Quality Gates"){
+            steps{
+                script{
+                    sonarqube_code_quality()
+                }
             }
         }
         stage('Docker Login') {
@@ -30,21 +73,10 @@ pipeline {
                 sh "echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin"
             }
         }
-        stage('Debug Workspace') {
-            steps {
-                sh 'pwd'
-                sh 'ls -R'
-            }
-        }
         stage('Docker Build') {
             steps {
                 sh "docker build -t rohitar/codexhub-frontend:${params.DOCKER_TAG} ./Frontend"
                 sh "docker build -t rohitar/codexhub-backend:${params.DOCKER_TAG} ./Backend"
-            }
-        }
-        stage('Test Code') {
-            steps {
-                echo 'Code is testing by devloper'
             }
         }
         stage('Docker Image Push') {
