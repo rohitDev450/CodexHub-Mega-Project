@@ -1,10 +1,10 @@
 pipeline {
     agent any
-      parameters {
+    parameters {
         string(name: 'DOCKER_TAG', defaultValue: '', description: 'Tag for Docker Images (e.g., v1, v2, latest)')
     }
-    environment{
-        DOCKER_CREDS = credentials('Docker_user') 
+    environment {
+        DOCKER_CREDS = credentials('Docker_user')
         KUBECONFIG = '/var/lib/jenkins/.kube/config'
     }
 
@@ -13,7 +13,7 @@ pipeline {
             steps {
                 script {
                     if (!params.DOCKER_TAG?.trim()) {
-                        error "❌ DOCKER_TAG parameter is required! Please provide a tag value (e.g., v1, v2)."
+                        error '❌ DOCKER_TAG parameter is required! Please provide a tag value (e.g., v1, v2).'
                     } else {
                         echo "✅ DOCKER_TAG is set to: ${params.DOCKER_TAG}"
                     }
@@ -22,18 +22,18 @@ pipeline {
         }
         stage('Git Clone') {
             steps {
-               git url: 'https://github.com/rohitDev450/CodexHub-Mega-Project.git', branch: 'main', changelog: false, poll: false
+                git url: 'https://github.com/rohitDev450/CodexHub-Mega-Project.git', branch: 'main', changelog: false, poll: false
             }
-       }
-       stage('Docker Login') {
+        }
+        stage('Docker Login') {
             steps {
                 sh "echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin"
             }
         }
-       stage('Debug Workspace') {
-           steps {
-             sh 'pwd'
-             sh 'ls -R'
+        stage('Debug Workspace') {
+            steps {
+                sh 'pwd'
+                sh 'ls -R'
             }
         }
         stage('Docker Build') {
@@ -42,9 +42,9 @@ pipeline {
                 sh "docker build -t rohitar/codexhub-backend:${params.DOCKER_TAG} ./Backend"
             }
         }
-         stage('Test Code') {
+        stage('Test Code') {
             steps {
-                   echo "Code is testing by devloper"
+                echo 'Code is testing by devloper'
             }
         }
         stage('Docker Image Push') {
@@ -55,29 +55,29 @@ pipeline {
         }
         stage('Code Deploy') {
             steps {
-                 sh """
+                sh """
                   kubectl apply -f ${WORKSPACE}/k8s/namespace.yml
 
                   # Deploy PV and PVC for MongoDB
+                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-pv.yml
                   kubectl apply -f ${WORKSPACE}/k8s/mongodb-pvc.yml -n codexhub
-                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-pv.yml -n codexhub
 
-
-                  kubectl apply -f ${WORKSPACE}/k8s/frontend-deployment.yml -n codexhub
-                  kubectl apply -f ${WORKSPACE}/k8s/frontend-service.yml -n codexhub
+                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-deployment.yml -n codexhub
+                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-service.yml -n codexhub
 
                   kubectl apply -f ${WORKSPACE}/k8s/backend-deployment.yml -n codexhub
                   kubectl apply -f ${WORKSPACE}/k8s/backend-service.yml -n codexhub
 
-                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-deployment.yml -n codexhub
-                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-service.yml -n codexhub
+                  kubectl apply -f ${WORKSPACE}/k8s/frontend-deployment.yml -n codexhub
+                  kubectl apply -f ${WORKSPACE}/k8s/frontend-service.yml -n codexhub
+
                 """
             }
         }
-   }
-   post {
-     success {
-         archiveArtifacts artifacts: '*.yml', followSymlinks: false
+    }
+    post {
+        success {
+            archiveArtifacts artifacts: '*.yml', followSymlinks: false
         }
     }
 }
