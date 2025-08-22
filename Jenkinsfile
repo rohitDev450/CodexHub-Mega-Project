@@ -58,6 +58,11 @@ pipeline {
                  sh """
                   kubectl apply -f ${WORKSPACE}/k8s/namespace.yml
 
+                  # Deploy PV and PVC for MongoDB
+                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-pvc.yml -n codexhub
+                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-pv.yml -n codexhub
+
+
                   kubectl apply -f ${WORKSPACE}/k8s/frontend-deployment.yml -n codexhub
                   kubectl apply -f ${WORKSPACE}/k8s/frontend-service.yml -n codexhub
 
