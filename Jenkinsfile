@@ -56,7 +56,7 @@ pipeline {
         stage("SonarQube: Code Analysis"){
             steps{
                 script{
-                    sonarqube_analysis("Sonar","wanderlust","wanderlust")
+                    sonarqube_analysis("sonar","wanderlust","wanderlust")
                 }
             }
         }
@@ -109,7 +109,7 @@ pipeline {
     }
     post {
         success {
-            archiveArtifacts artifacts: '*.yml', followSymlinks: false
+            archiveArtifacts artifacts: '*.xml', followSymlinks: false
         }
     }
 }
