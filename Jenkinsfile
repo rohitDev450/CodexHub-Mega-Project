@@ -56,7 +56,7 @@ pipeline {
         stage("SonarQube: Code Analysis"){
             steps{
                 script{
-                    sonarqube_analysis("sonar","wanderlust","wanderlust")
+                    sonarqube_analysis("sonar","Codexhub","Codexhub")
                 }
             }
         }
