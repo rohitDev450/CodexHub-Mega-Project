@@ -8,7 +8,7 @@ pipeline {
     environment {
         DOCKER_CREDS = credentials('Docker_user')
         KUBECONFIG = '/var/lib/jenkins/.kube/config'
-        SONAR_HOME = tool "Sonar"
+        SONAR_HOME = tool "sonar"
     }
 
     stages {
