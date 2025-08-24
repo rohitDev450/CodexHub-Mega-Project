@@ -6,8 +6,8 @@ pipeline {
        
     }
     environment {
-        DOCKER_CREDS = credentials('Docker_user')
-        KUBECONFIG = '/var/lib/jenkins/.kube/config'
+        DOCKER_CREDS = credentials('docker')
+        KUBECONFIG = 'kubeconfig'
         SONAR_HOME = tool "sonar"
     }
 
