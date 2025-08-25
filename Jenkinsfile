@@ -48,8 +48,8 @@ pipeline {
         stage("OWASP: Dependency check") {
             steps {
                 script {
-                    // 🔑 Pass NVD API Key here
-                    owasp_dependency("--nvdApiKey ${env.NVD_API_KEY}")
+                   
+                    owasp_dependency()
                 }
             }
         }
