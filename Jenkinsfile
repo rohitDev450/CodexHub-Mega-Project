@@ -110,6 +110,8 @@ pipeline {
     post {
         success {
             archiveArtifacts artifacts: '*.xml', followSymlinks: false
+            build job: "Codexhub-CD", parameters: [
+                string(name: 'DOCKER_TAG', value: "${params.DOCKER_TAG}"),
         }
     }
 }
