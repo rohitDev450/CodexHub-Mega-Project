@@ -69,10 +69,12 @@ pipeline {
         //         }
         //     }
         // }
-
+ 
         stage('Docker Login') {
-            steps {
-                sh "echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin"
+           steps {
+                sh """
+                    echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin
+                """
             }
         }
 
