@@ -85,28 +85,28 @@ pipeline {
                 sh "docker push rohitar/codexhub-backend:${params.DOCKER_TAG}"
             }
         }
-        stage('Code Deploy') {
-            steps {
-                sh """
-                  kubectl apply -f ${WORKSPACE}/k8s/namespace.yml
+    //     stage('Code Deploy') {
+    //         steps {
+    //             sh """
+    //               kubectl apply -f ${WORKSPACE}/k8s/namespace.yml
 
-                  # Deploy PV and PVC for MongoDB
-                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-pv.yml
-                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-pvc.yml -n codexhub
+    //               # Deploy PV and PVC for MongoDB
+    //               kubectl apply -f ${WORKSPACE}/k8s/mongodb-pv.yml
+    //               kubectl apply -f ${WORKSPACE}/k8s/mongodb-pvc.yml -n codexhub
 
-                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-deployment.yml -n codexhub
-                  kubectl apply -f ${WORKSPACE}/k8s/mongodb-service.yml -n codexhub
+    //               kubectl apply -f ${WORKSPACE}/k8s/mongodb-deployment.yml -n codexhub
+    //               kubectl apply -f ${WORKSPACE}/k8s/mongodb-service.yml -n codexhub
 
-                  kubectl apply -f ${WORKSPACE}/k8s/backend-deployment.yml -n codexhub
-                  kubectl apply -f ${WORKSPACE}/k8s/backend-service.yml -n codexhub
+    //               kubectl apply -f ${WORKSPACE}/k8s/backend-deployment.yml -n codexhub
+    //               kubectl apply -f ${WORKSPACE}/k8s/backend-service.yml -n codexhub
 
-                  kubectl apply -f ${WORKSPACE}/k8s/frontend-deployment.yml -n codexhub
-                  kubectl apply -f ${WORKSPACE}/k8s/frontend-service.yml -n codexhub
+    //               kubectl apply -f ${WORKSPACE}/k8s/frontend-deployment.yml -n codexhub
+    //               kubectl apply -f ${WORKSPACE}/k8s/frontend-service.yml -n codexhub
 
-                """
-            }
-        }
-    }
+    //             """
+    //         }
+    //     }
+    // }
     post {
         success {
             archiveArtifacts artifacts: '*.xml', followSymlinks: false
