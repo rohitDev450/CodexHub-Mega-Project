@@ -100,20 +100,25 @@ pipeline {
         }
     }
 
-    post {
-        success {
-            script {
-                    def xmlFiles = findFiles(glob: '*.xml')
-                     if (xmlFiles.length > 0) {
-                           archiveArtifacts artifacts: '*.xml', followSymlinks: false
-                            } else {
-                           echo "No XML files to archive"
-                       }
-                    }
-             build job: "Codexhub-CD", parameters: [
-                       string(name: 'DOCKER_TAG', value: "${params.DOCKER_TAG}")
-                       ], wait: false, propagate: false
+  post {
+    success {
+        script {
+            // Archive XML artifacts safely
+            def xmlFiles = findFiles(glob: '*.xml')
+            if (xmlFiles.length > 0) {
+                archiveArtifacts artifacts: '*.xml', followSymlinks: false
+            } else {
+                echo "No XML files to archive"
+            }
 
+            // Trigger downstream job safely
+            catchError(buildResult: 'SUCCESS', stageResult: 'SUCCESS') {
+                build job: "Codexhub-CD",
+                      parameters: [string(name: 'DOCKER_TAG', value: "${params.DOCKER_TAG}")],
+                      wait: false, propagate: false
+            }
         }
     }
+}
+
 }
