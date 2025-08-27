@@ -59,8 +59,10 @@ pipeline {
                         git status
                         
                         echo "Configuring Git identity:"
-                        git config user.name "rohit"
-                        git config user.email "rohitaute111@gmail.com"
+                        git config user.name "Rohit Aute"
+                        git config user.email "rohit.aute450@gmail.com"
+
+                        git checkout main || git checkout -b main
                     
                         echo "Adding changes to git:"
                         git add .
@@ -69,7 +71,8 @@ pipeline {
                         git commit -m "Updated image tags" || echo "No changes to commit"
                         
                         echo "Pushing changes to GitHub:"
-                        git push origin main
+                        git push origin HEAD:main
+
                         '''
                     }
                 }
