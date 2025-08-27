@@ -15,6 +15,6 @@ spec:
     spec:
       containers:
         - name: codexhub-frontend
-          image: rohitar/codexhub-mega-project-frontend:CH-1
+          image: rohitar/codexhub-mega-project-frontend:CH-10
           ports:
             - containerPort: 5173
