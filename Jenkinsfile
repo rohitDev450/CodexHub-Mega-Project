@@ -1,11 +1,13 @@
 @Library('Shared') _
+
 pipeline {
     agent any
+
     parameters {
         string(name: 'DOCKER_TAG', defaultValue: '', description: 'Tag for Docker Images (e.g., v1, v2, latest)')
     }
+
     environment {
-        DOCKER_CREDS = credentials('docker')
         KUBECONFIG = 'kubeconfig'
         SONAR_HOME = tool "sonar"
     }
@@ -23,7 +25,7 @@ pipeline {
             }
         }
 
-        stage("Workspace cleanup") {
+        stage('Workspace cleanup') {
             steps {
                 cleanWs()
             }
@@ -37,7 +39,7 @@ pipeline {
             }
         }
 
-        stage("Trivy: Filesystem scan") {
+        stage('Trivy: Filesystem scan') {
             steps {
                 script {
                     trivy_scan()
@@ -45,16 +47,15 @@ pipeline {
             }
         }
 
-        stage("OWASP: Dependency check") {
+        stage('OWASP: Dependency check') {
             steps {
                 script {
-                   
                     owasp_dependency()
                 }
             }
         }
 
-        stage("SonarQube: Code Analysis") {
+        stage('SonarQube: Code Analysis') {
             steps {
                 script {
                     sonarqube_analysis("sonar", "Codexhub", "Codexhub")
@@ -62,33 +63,39 @@ pipeline {
             }
         }
 
-        stage("SonarQube: Code Quality Gates") {
+        stage('SonarQube: Code Quality Gates') {
             steps {
                 script {
                     sonarqube_code_quality()
                 }
             }
         }
- 
+
         stage('Docker Login') {
-           steps {
-                sh """
-                    echo $DOCKER_CREDS_PSW | docker login -u $DOCKER_CREDS_USR --password-stdin
-                """
+            steps {
+                withCredentials([usernamePassword(credentialsId: 'docker', usernameVariable: 'DOCKER_USER', passwordVariable: 'DOCKER_PASS')]) {
+                    sh '''
+                        echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin
+                    '''
+                }
             }
         }
 
         stage('Docker Build') {
             steps {
-                sh "docker build -t rohitar/codexhub-frontend:${params.DOCKER_TAG} ./Frontend"
-                sh "docker build -t rohitar/codexhub-backend:${params.DOCKER_TAG} ./Backend"
+                sh '''
+                    docker build -t rohitar/codexhub-frontend:${DOCKER_TAG} ./Frontend
+                    docker build -t rohitar/codexhub-backend:${DOCKER_TAG} ./Backend
+                '''
             }
         }
 
         stage('Docker Image Push') {
             steps {
-                sh "docker push rohitar/codexhub-frontend:${params.DOCKER_TAG}"
-                sh "docker push rohitar/codexhub-backend:${params.DOCKER_TAG}"
+                sh '''
+                    docker push rohitar/codexhub-frontend:${DOCKER_TAG}
+                    docker push rohitar/codexhub-backend:${DOCKER_TAG}
+                '''
             }
         }
     }
