@@ -18,6 +18,7 @@ pipeline {
         stage('Git: Code Checkout') {
             steps {
                 script{
+                    // ✅ Checkout default branch "main"
                     code_checkout("https://github.com/rohitDev450/CodexHub-Mega-Project.git","main")
                 }
             }
@@ -40,7 +41,7 @@ pipeline {
                         """
                     }
                 
-                    dir('kubernetes') {
+                    dir('k8s') {
                         sh """
                             sed -i -E "s#image:.*rohitar/codexhub-mega-project-frontend:.*#image: rohitar/codexhub-mega-project-frontend:${params.DOCKER_TAG}#g" frontend-deployment.yml
                         """
@@ -54,16 +55,20 @@ pipeline {
                 script {
                     withCredentials([gitUsernamePassword(credentialsId: 'Github-cred', gitToolName: 'Default')]) {
                         sh '''
-                        echo "Checking repository status: "
+                        echo "Checking repository status:"
                         git status
+                        
+                        echo "Configuring Git identity:"
+                        git config user.name "rohit"
+                        git config user.email "rohitaute111@gmail.com"
                     
-                        echo "Adding changes to git: "
+                        echo "Adding changes to git:"
                         git add .
                         
-                        echo "Committing changes (if any): "
+                        echo "Committing changes (if any):"
                         git commit -m "Updated image tags" || echo "No changes to commit"
                         
-                        echo "Pushing changes to GitHub: "
+                        echo "Pushing changes to GitHub:"
                         git push origin main
                         '''
                     }
