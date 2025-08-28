@@ -26,8 +26,12 @@ CD pipeline to update application version
 sudo apt install docker.io -y
 sudo usermod -aG docker ubuntu && newgrp docker
 
+------------------------------------------------------------------
+
 2️⃣ Install & Configure SonarQube (Master Machine)
 docker run -itd --name SonarQube-Server -p 9000:9000 sonarqube:lts-community
+
+------------------------------------------------------------------
 
 3️⃣ Install Trivy (Jenkins Worker)
 sudo apt-get install wget apt-transport-https gnupg lsb-release -y
@@ -36,36 +40,50 @@ echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main |
 sudo apt-get update -y
 sudo apt-get install trivy -y
 
+------------------------------------------------------------------
+
 4️⃣ Install & Configure ArgoCD (Master Machine)
 # Create namespace
 kubectl create namespace argocd  
 
+------------------------------------------------------------------
+
 # Apply ArgoCD manifest
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml  
 
+------------------------------------------------------------------
+
 # Check pods
 watch kubectl get pods -n argocd
+
+------------------------------------------------------------------
 
 Install CLI
 sudo curl --silent --location -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.4.7/argocd-linux-amd64
 sudo chmod +x /usr/local/bin/argocd
 
+------------------------------------------------------------------
+
 Change ArgoCD Service Type
 kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
 kubectl get svc -n argocd
 
+------------------------------------------------------------------
 
 📷 Image: ArgoCD Service Exposed
 
 Get Initial Password
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
 
+------------------------------------------------------------------
 
 Username: admin
 
 Reset password after login
 
 📷 Image: ArgoCD Login Screen
+
+------------------------------------------------------------------
 
 📧 Email Notifications (Jenkins)
 
@@ -74,6 +92,8 @@ Allow port 465 (SMTPS) on Jenkins Master EC2.
 Enable 2-Step Verification in Gmail.
 
 Generate an App Password for Jenkins.
+
+------------------------------------------------------------------
 
 📷 Image: Gmail App Password Setup
 
@@ -84,8 +104,13 @@ Configure under:
 Extended E-mail Notification
 
 E-mail Notification (Advanced settings)
+------------------------------------------------------------------
+
 
 📷 Image: Jenkins Email Setup
+
+------------------------------------------------------------------
+
 
 🔗 Jenkins Plugins Required
 
@@ -97,7 +122,11 @@ Docker Pipeline
 
 Stage View
 
+------------------------------------------------------------------
+
 📷 Image: Jenkins Plugins Installation
+
+------------------------------------------------------------------
 
 🔒 SonarQube Integration
 
@@ -124,6 +153,8 @@ Checkout → Build → Quality → Security → Docker → GitOps → Deploy.
 Verify deployment on Kubernetes cluster.
 
 📷 Image: Final Application Running
+
+------------------------------------------------------------------
 
 🎯 Outcome
 
