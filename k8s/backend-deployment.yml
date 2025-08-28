@@ -15,7 +15,7 @@ spec:
     spec:
       containers:
         - name: backend
-          image: rohitar/codexhub-mega-project-backend:CH-12
+          image: rohitar/codexhub-mega-project-backend:CH-13
           ports:
             - containerPort: 5001
           env:
