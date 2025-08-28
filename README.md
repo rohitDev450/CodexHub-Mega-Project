@@ -21,83 +21,116 @@ CD pipeline to update application version
 
 ------------------------------------------------------------------
 
-Install docker (Jenkins Worker)
+🔧 Installation & Setup
+1️⃣ Install Docker (Jenkins Worker)
 sudo apt install docker.io -y
 sudo usermod -aG docker ubuntu && newgrp docker
-Install and configure SonarQube (Master machine)
+
+2️⃣ Install & Configure SonarQube (Master Machine)
 docker run -itd --name SonarQube-Server -p 9000:9000 sonarqube:lts-community
-Install Trivy (Jenkins Worker)
+
+3️⃣ Install Trivy (Jenkins Worker)
 sudo apt-get install wget apt-transport-https gnupg lsb-release -y
 wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | sudo apt-key add -
 echo deb https://aquasecurity.github.io/trivy-repo/deb $(lsb_release -sc) main | sudo tee -a /etc/apt/sources.list.d/trivy.list
 sudo apt-get update -y
 sudo apt-get install trivy -y
-Install and Configure ArgoCD (Master Machine)
-Create argocd namespace
-kubectl create namespace argocd
-Apply argocd manifest
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-Make sure all pods are running in argocd namespace
+
+4️⃣ Install & Configure ArgoCD (Master Machine)
+# Create namespace
+kubectl create namespace argocd  
+
+# Apply ArgoCD manifest
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml  
+
+# Check pods
 watch kubectl get pods -n argocd
-Install argocd CLI
+
+Install CLI
 sudo curl --silent --location -o /usr/local/bin/argocd https://github.com/argoproj/argo-cd/releases/download/v2.4.7/argocd-linux-amd64
-Provide executable permission
 sudo chmod +x /usr/local/bin/argocd
-Check argocd services
-kubectl get svc -n argocd
-Change argocd server's service from ClusterIP to NodePort
+
+Change ArgoCD Service Type
 kubectl patch svc argocd-server -n argocd -p '{"spec": {"type": "NodePort"}}'
-Confirm service is patched or not
 kubectl get svc -n argocd
-Check the port where ArgoCD server is running and expose it on security groups of a worker node image
-Access it on browser, click on advance and proceed with
-<public-ip-worker>:<port>
-image image image
-Fetch the initial password of argocd server
+
+
+📷 Image: ArgoCD Service Exposed
+
+Get Initial Password
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+
+
 Username: admin
-Now, go to User Info and update your argocd password
-Steps to add email notification
-Go to your Jenkins Master EC2 instance and allow 465 port number for SMTPS
-Now, we need to generate an application password from our gmail account to authenticate with jenkins
-Open gmail and go to Manage your Google Account --> Security
-Important
 
-Make sure 2 step verification must be on
+Reset password after login
 
-image
+📷 Image: ArgoCD Login Screen
 
-Search for App password and create a app password for jenkins image image
-Once, app password is create and go back to jenkins Manage Jenkins --> Credentials to add username and password for email notification image
-Go back to Manage Jenkins --> System and search for Extended E-mail Notification image
-Scroll down and search for E-mail Notification and setup email notification
-Important
+📧 Email Notifications (Jenkins)
 
-Enter your gmail password which we copied recently in password field E-mail Notification --> Advance
+Allow port 465 (SMTPS) on Jenkins Master EC2.
 
-image image image
+Enable 2-Step Verification in Gmail.
 
-Steps to implement the project:
-Go to Jenkins Master and click on Manage Jenkins --> Plugins --> Available plugins install the below plugins:
-OWASP
+Generate an App Password for Jenkins.
+
+📷 Image: Gmail App Password Setup
+
+Add credentials in Jenkins → Manage Jenkins → Credentials.
+
+Configure under:
+
+Extended E-mail Notification
+
+E-mail Notification (Advanced settings)
+
+📷 Image: Jenkins Email Setup
+
+🔗 Jenkins Plugins Required
+
+OWASP Dependency Check
+
 SonarQube Scanner
-Docker
-Pipeline: Stage View
-Configure OWASP, move to Manage Jenkins --> Plugins --> Available plugins (Jenkins Worker) image
 
-After OWASP plugin is installed, Now move to Manage jenkins --> Tools (Jenkins Worker) image
+Docker Pipeline
 
-Login to SonarQube server and create the credentials for jenkins to integrate with SonarQube
-Navigate to Administration --> Security --> Users --> Token image image image
-Now, go to Manage Jenkins --> credentials and add Sonarqube credentials: image
-Go to Manage Jenkins --> Tools and search for SonarQube Scanner installations: image
-Go to Manage Jenkins --> credentials and add Github credentials to push updated code from the pipeline: image
-Note
+Stage View
 
-While adding github credentials add Personal Access Token in the password field.
+📷 Image: Jenkins Plugins Installation
 
-Go to Manage Jenkins --> System and search for SonarQube installations: image
-Now again, Go to Manage Jenkins --> System and search for Global Trusted Pipeline Libraries:</b image image
-Login to SonarQube server, go to Administration --> Webhook and click on create image image
+🔒 SonarQube Integration
 
+Create Token → Administration → Security → Users → Token.
 
+Add credentials in Jenkins.
+
+Configure SonarQube Scanner in Jenkins Tools.
+
+Set Webhook in SonarQube for Jenkins.
+
+📷 Image: SonarQube Webhook Setup
+
+📝 Steps to Implement the Project
+
+Install all required tools on Jenkins Master/Worker.
+
+Configure credentials for GitHub, DockerHub, SonarQube, and Gmail.
+
+Setup Jenkins pipeline stages:
+
+Checkout → Build → Quality → Security → Docker → GitOps → Deploy.
+
+Verify deployment on Kubernetes cluster.
+
+📷 Image: Final Application Running
+
+🎯 Outcome
+
+Fully automated CI/CD pipeline
+
+Code → Build → Test → Secure → Deploy → Monitor
+
+GitOps-driven deployment using ArgoCD
+
+Scalable, zero-downtime app with Kubernetes
