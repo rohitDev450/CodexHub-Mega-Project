@@ -1,6 +1,9 @@
 # CodexHub-Mega-Project
 A cloud-native 3-tier application (React, Node.js, MongoDB) showcasing end-to-end DevOps practices with Docker, Jenkins CI/CD, and Kubernetes for scalable deployment.
 
+<img width="1920" height="1080" alt="image" src="https://github.com/user-attachments/assets/a70f9670-7c4e-47e9-bc9d-0f5e2d148064" />
+
+
 Tech stack used in this project:
 --------------------------------------------------------------------------
 GitHub (Code)
