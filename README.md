@@ -73,16 +73,24 @@ kubectl get svc -n argocd
 
 ------------------------------------------------------------------
 
+<img width="1327" height="624" alt="image" src="https://github.com/user-attachments/assets/402bfdea-9997-4640-8374-99e4057bcce1" />
+
+
 📷 Image: ArgoCD Service Exposed
 
 Get Initial Password
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath="{.data.password}" | base64 -d; echo
+
+<img width="1320" height="641" alt="image" src="https://github.com/user-attachments/assets/729c9784-52d6-46de-9f74-69cc2f48e7d4" />
 
 ------------------------------------------------------------------
 
 Username: admin
 
 Reset password after login
+
+<img width="1326" height="669" alt="image" src="https://github.com/user-attachments/assets/640c9195-a64a-4147-aa34-5a8dae0000ca" />
+
 
 📷 Image: ArgoCD Login Screen
 
@@ -111,6 +119,8 @@ E-mail Notification (Advanced settings)
 
 
 📷 Image: Jenkins Email Setup
+<img width="1336" height="631" alt="image" src="https://github.com/user-attachments/assets/e0e13ea2-34d0-48a2-b881-428d5b4af5cd" />
+
 
 ------------------------------------------------------------------
 
@@ -128,6 +138,7 @@ Stage View
 ------------------------------------------------------------------
 
 📷 Image: Jenkins Plugins Installation
+<img width="1339" height="634" alt="image" src="https://github.com/user-attachments/assets/4a074372-bc79-4dce-af44-98e0852041d0" />
 
 ------------------------------------------------------------------
 
@@ -136,26 +147,16 @@ Stage View
 Create Token → Administration → Security → Users → Token.
 
 Add credentials in Jenkins.
+<img width="1314" height="670" alt="image" src="https://github.com/user-attachments/assets/ad006086-1491-4e0e-af4d-bd1db2fddd1e" />
+
+<img width="1332" height="557" alt="image" src="https://github.com/user-attachments/assets/8985aa92-5503-441f-92c8-160b528f86a9" />
+
 
 Configure SonarQube Scanner in Jenkins Tools.
 
 Set Webhook in SonarQube for Jenkins.
 
-📷 Image: SonarQube Webhook Setup
-
-📝 Steps to Implement the Project
-
-Install all required tools on Jenkins Master/Worker.
-
-Configure credentials for GitHub, DockerHub, SonarQube, and Gmail.
-
-Setup Jenkins pipeline stages:
-
-Checkout → Build → Quality → Security → Docker → GitOps → Deploy.
-
-Verify deployment on Kubernetes cluster.
-
-📷 Image: Final Application Running
+<img width="1297" height="378" alt="image" src="https://github.com/user-attachments/assets/3e3321f3-1092-4273-a56c-fefefb19f639" />
 
 ------------------------------------------------------------------
 
